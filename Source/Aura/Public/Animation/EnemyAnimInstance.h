@@ -4,28 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "Character/AuraCharacter.h"
+#include "Character/AuraEnemy.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "AuraAnimInstance.generated.h"
+#include "EnemyAnimInstance.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class AURA_API UAuraAnimInstance : public UAnimInstance
+class AURA_API UEnemyAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 public:
-	UAuraAnimInstance();
-	
+	UEnemyAnimInstance();
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaTimeX) override;
 	
 protected:
 	UPROPERTY()
-	TObjectPtr<AAuraCharacter> AuraCharacter;
+	TObjectPtr<AAuraEnemy> EnemyCharacter;
 	UPROPERTY()
-	TObjectPtr<UCharacterMovementComponent> CharacterMovement;
+	TObjectPtr<UCharacterMovementComponent> EnemyMovement;
 	UPROPERTY(BlueprintReadOnly,Category="AuraSpeed")
-	float AuraSpeed;
+	float EnemySpeed;
+	
 };

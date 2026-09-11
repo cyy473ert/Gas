@@ -11,7 +11,9 @@ UAuraAnimInstance::UAuraAnimInstance()
 
 void UAuraAnimInstance::NativeInitializeAnimation()
 {
-	if (AuraCharacter != nullptr)
+	Super::NativeInitializeAnimation();
+	AuraCharacter = Cast<AAuraCharacter>(TryGetPawnOwner());
+	if (AuraCharacter)
 	{
 		CharacterMovement = AuraCharacter->GetCharacterMovement();
 	}
@@ -20,7 +22,7 @@ void UAuraAnimInstance::NativeInitializeAnimation()
 void UAuraAnimInstance::NativeUpdateAnimation(float DeltaTimeX)
 {
 	Super::NativeUpdateAnimation(DeltaTimeX);
-	if (CharacterMovement != nullptr)
+	if (CharacterMovement)
 	{
 		AuraSpeed = CharacterMovement->Velocity.Size2D();
 	}
