@@ -2,8 +2,9 @@
 
 
 #include "Animation/AuraAnimInstance.h"
-
+#include "Character/AuraCharacter.h"
 #include "GameFramework/CharacterMovementComponent.h"
+
 
 UAuraAnimInstance::UAuraAnimInstance()
 {
@@ -25,5 +26,13 @@ void UAuraAnimInstance::NativeUpdateAnimation(float DeltaTimeX)
 	if (CharacterMovement)
 	{
 		AuraSpeed = CharacterMovement->Velocity.Size2D();
+		if (AuraSpeed > 1)
+		{
+			bMove = true;
+		}
+		else
+		{
+			bMove = false;
+		}
 	}
 }

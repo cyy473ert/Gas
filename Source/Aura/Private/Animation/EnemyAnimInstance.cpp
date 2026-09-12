@@ -2,6 +2,8 @@
 
 
 #include "Animation/EnemyAnimInstance.h"
+#include "Character/AuraEnemy.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UEnemyAnimInstance::UEnemyAnimInstance()
 {

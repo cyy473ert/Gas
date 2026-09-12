@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "Character/AuraCharacter.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "AuraAnimInstance.generated.h"
 
+class AAuraCharacter;
+class UCharacterMovementComponent;
 /**
  * 
  */
@@ -22,10 +22,12 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaTimeX) override;
 	
 protected:
-	UPROPERTY()
+	UPROPERTY(BlueprintReadWrite,Category="Aiminstance")
 	TObjectPtr<AAuraCharacter> AuraCharacter;
 	UPROPERTY()
 	TObjectPtr<UCharacterMovementComponent> CharacterMovement;
-	UPROPERTY(BlueprintReadOnly,Category="AuraSpeed")
+	UPROPERTY(BlueprintReadOnly,Category="Aiminstance")
 	float AuraSpeed;
+	UPROPERTY(BlueprintReadOnly,Category="Aiminstance")
+	bool bMove = false;
 };

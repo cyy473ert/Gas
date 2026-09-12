@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "Character/AuraEnemy.h"
-#include "GameFramework/CharacterMovementComponent.h"
 #include "EnemyAnimInstance.generated.h"
 
+class AAuraEnemy;
+class UCharacterMovementComponent;
 /**
  * 
  */
