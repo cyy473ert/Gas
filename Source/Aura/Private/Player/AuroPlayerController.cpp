@@ -5,7 +5,7 @@
 
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-
+#include "Interface/EnemyInterface.h"
 
 
 AAuroPlayerController::AAuroPlayerController()
@@ -31,6 +31,12 @@ void AAuroPlayerController::BeginPlay()
 	SetInputMode(InputModeData);
 }
 
+void AAuroPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	CursorTrace();
+}
+
 void AAuroPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -50,5 +56,39 @@ void AAuroPlayerController::Move(const FInputActionValue& InputActionValue)
 	{
 		ControlPawn->AddMovementInput(ForwardDirection, InputAxisVctor.Y);
 		ControlPawn->AddMovementInput(RightDirection, InputAxisVctor.X);
+	}
+}
+
+void AAuroPlayerController::CursorTrace()
+{
+	FHitResult Hit;
+	GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility,false,Hit);
+	if (Hit.bBlockingHit) return;
+	LastCursor = ThisCursor;
+	ThisCursor = Cast<IEnemyInterface>(Hit.GetActor()); //这是的判断是判断这个actor有没有实现这个接口
+	/*1.last 空 this 空    nothing
+	 *2.last 空 this 有    CursorOn()
+	 *3.last 有 this 空    UnCursorOn() 
+	 *4.last 有 this 有但是和上一个是不同的    last UnCursorOn()  this CursorOn()
+	 *5.last 空 this 空    nothing
+	 */
+	if (LastCursor == nullptr)
+	{
+		if (ThisCursor)
+		{
+			ThisCursor->CursorOn();
+		}
+	}
+	else
+	{
+		if (ThisCursor == nullptr)
+		{
+			LastCursor->UnCursorOn();
+		}
+		else if(ThisCursor == nullptr && LastCursor != ThisCursor) 
+		{
+			LastCursor->UnCursorOn();
+			ThisCursor->CursorOn();
+		}
 	}
 }
